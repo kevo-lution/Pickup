@@ -1,13 +1,15 @@
 # main.py
 
 import os
-from dotenv.python import load_dotenv
 import discord
+from dotenv import load_dotenv
 from discord.ext import commands
 import mysql.connector
 
+
 # Bot Setup
 
+    
 # Define the bot's intents
 intents = discord.Intents.all()
 
@@ -31,9 +33,9 @@ async def on_ready():
 @bot.event
 async def on_member_join(ctx, member):
     guild = ctx.guild  # Fetch the guild object
-    load_dotenv()
     pword = os.getenv("password")
-    bot.run(pword)
+
+
     # Get member information
 
     await guild.chunk()  # Ensure all members are fetched

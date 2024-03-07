@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-from dotenv import load_dotenv
 import os
 import asyncio
 import random
@@ -287,7 +286,6 @@ class MyCommands(commands.Cog):
 
     async def updateStats(self, ctx, guild, winning_team, winning_members, losing_team, losing_members):
 
-        load_dotenv()
         pword = os.getenv("password")
 
             # Connect to MySQL database
@@ -568,7 +566,6 @@ class MyCommands(commands.Cog):
     async def wl(self, ctx, *users: discord.Member):
         guild = ctx.guild  # Fetch the guild object
         nickname = ctx.author.nick
-        load_dotenv()
         pword = os.getenv("password")
 
             # Connect to MySQL database
@@ -604,7 +601,6 @@ class MyCommands(commands.Cog):
         if member is None:
             await ctx.send("You need to mention a user to add a win.")
             return
-        load_dotenv()
         pword = os.getenv("password")
 
         if discord.utils.get(ctx.author.roles, name="Super Saiyan Blue"):
@@ -630,7 +626,6 @@ class MyCommands(commands.Cog):
         if member is None:
             await ctx.send("You need to mention a user to add a win.")
             return
-        load_dotenv()
         pword = os.getenv("password")
 
 
@@ -657,7 +652,6 @@ class MyCommands(commands.Cog):
         if member is None:
             await ctx.send("You need to mention a user to add a win.")
             return
-        load_dotenv()
         pword = os.getenv("password")
 
         if discord.utils.get(ctx.author.roles, name="Super Saiyan Blue"):
@@ -680,7 +674,6 @@ class MyCommands(commands.Cog):
 
     @commands.command()
     async def removel(self, ctx, member: discord.Member):
-        load_dotenv()
         pword = os.getenv("password")
 
         if discord.utils.get(ctx.author.roles, name="Super Saiyan Blue"):
@@ -725,9 +718,8 @@ class MyCommands(commands.Cog):
 
     async def fetching(self, ctx, users):
         guild = ctx.guild  # Fetch the guild object
-        load_dotenv()
         pword = os.getenv("password")
-
+        commands.run(pword)
 
         # Connect to MySQL database
         db = mysql.connector.connect(
