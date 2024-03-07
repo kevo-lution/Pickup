@@ -3,7 +3,7 @@ from discord.ext import commands
 import os
 import asyncio
 import random
-import mysql.connector
+import psycopg2
 import datetime
 
 class MyCommands(commands.Cog):
@@ -286,14 +286,19 @@ class MyCommands(commands.Cog):
 
     async def updateStats(self, ctx, guild, winning_team, winning_members, losing_team, losing_members):
 
-        pword = os.getenv("password")
+        # Connect to MySQL database
+        pword = os.getenv("password"),
+        hst = os.getenv("host"),
+        ser = os.getenv("user"),
+        base = os.getenv("database")
 
-            # Connect to MySQL database
-        db = mysql.connector.connect(
-            host="localhost",
-            user="root",
+
+        # Connect to MySQL database
+        db = psycopg2.connect(
+            host=hst,
+            user=ser,
             password=pword,
-            database="Pickup"
+            database=base
         )
         cursor = db.cursor()
 
@@ -567,13 +572,16 @@ class MyCommands(commands.Cog):
         guild = ctx.guild  # Fetch the guild object
         nickname = ctx.author.nick
         pword = os.getenv("password")
+        hst = os.getenv("host")
+        ser = os.getenv("user")
+        base = os.getenv("database")
 
             # Connect to MySQL database
-        db = mysql.connector.connect(
-            host="localhost",
-            user="root",
+        db = psycopg2.connect(
+            host=hst,
+            user=ser,
             password=pword,
-            database="Pickup"
+            database=base
         )
         cursor = db.cursor()
 
@@ -601,16 +609,22 @@ class MyCommands(commands.Cog):
         if member is None:
             await ctx.send("You need to mention a user to add a win.")
             return
-        pword = os.getenv("password")
+
 
         if discord.utils.get(ctx.author.roles, name="Super Saiyan Blue"):
-            db = mysql.connector.connect(
-                host="localhost",
-                user="root",
-                password=pword,
-                database="Pickup"
-            )
+            pword = os.getenv("password"),
+            hst = os.getenv("host"),
+            ser = os.getenv("user"),
+            base = os.getenv("database")
 
+
+            # Connect to MySQL database
+            db = psycopg2.connect(
+                host=hst,
+                user=ser,
+                password=pword,
+                database=base
+            )
             cursor = db.cursor()
             update_query = "UPDATE UserRecords SET Wins = Wins + 1 WHERE Username = %s"
             cursor.execute(update_query, (member.name,))
@@ -624,17 +638,22 @@ class MyCommands(commands.Cog):
     async def addl(self, ctx, member: discord.Member):
         # have to @ a member, even if it is yourself
         if member is None:
-            await ctx.send("You need to mention a user to add a win.")
+            await ctx.send("You need to mention a user to add a loss.")
             return
-        pword = os.getenv("password")
-
 
         if discord.utils.get(ctx.author.roles, name="Super Saiyan Blue"):
-            db = mysql.connector.connect(
-                host="localhost",
-                user="root",
+            pword = os.getenv("password"),
+            hst = os.getenv("host"),
+            ser = os.getenv("user"),
+            base = os.getenv("database")
+
+
+            # Connect to MySQL database
+            db = psycopg2.connect(
+                host=hst,
+                user=ser,
                 password=pword,
-                database="Pickup"
+                database=base
             )
             cursor = db.cursor()
             update_query = "UPDATE UserRecords SET Losses = Losses + 1 WHERE Username = %s"
@@ -650,16 +669,22 @@ class MyCommands(commands.Cog):
     @commands.command()
     async def removew(self, ctx, member: discord.Member):
         if member is None:
-            await ctx.send("You need to mention a user to add a win.")
+            await ctx.send("You need to mention a user to remove a win.")
             return
-        pword = os.getenv("password")
 
         if discord.utils.get(ctx.author.roles, name="Super Saiyan Blue"):
-            db = mysql.connector.connect(
-                host="localhost",
-                user="root",
+            pword = os.getenv("password"),
+            hst = os.getenv("host"),
+            ser = os.getenv("user"),
+            base = os.getenv("database")
+
+
+            # Connect to MySQL database
+            db = psycopg2.connect(
+                host=hst,
+                user=ser,
                 password=pword,
-                database="Pickup"
+                database=base
             )
             cursor = db.cursor()
             update_query = "UPDATE UserRecords SET Wins = Wins - 1 WHERE Username = %s"
@@ -678,14 +703,21 @@ class MyCommands(commands.Cog):
 
         if discord.utils.get(ctx.author.roles, name="Super Saiyan Blue"):
             if member is None:
-                await ctx.send("You need to mention a user to add a win.")
+                await ctx.send("You need to mention a user to remove a loss.")
                 return
             if discord.utils.get(ctx.author.roles, name="Super Saiyan Blue"):
-                db = mysql.connector.connect(
-                    host="localhost",
-                    user="root",
+                pword = os.getenv("password"),
+                hst = os.getenv("host"),
+                ser = os.getenv("user"),
+                base = os.getenv("database")
+
+
+                # Connect to MySQL database
+                db = psycopg2.connect(
+                    host=hst,
+                    user=ser,
                     password=pword,
-                    database="Pickup"
+                    database=base
                 )
                 cursor = db.cursor()
                 update_query = "UPDATE UserRecords SET Losses = Losses - 1 WHERE Username = %s"
@@ -718,15 +750,18 @@ class MyCommands(commands.Cog):
 
     async def fetching(self, ctx, users):
         guild = ctx.guild  # Fetch the guild object
-        pword = os.getenv("password")
-        commands.run(pword)
+        pword = os.getenv("password"),
+        hst = os.getenv("host"),
+        ser = os.getenv("user"),
+        base = os.getenv("database")
+
 
         # Connect to MySQL database
-        db = mysql.connector.connect(
-            host="localhost",
-            user="root",
+        db = psycopg2.connect(
+            host=hst,
+            user=ser,
             password=pword,
-            database="Pickup"
+            database=base
         )
         cursor = db.cursor()
 
