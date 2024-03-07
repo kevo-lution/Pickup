@@ -4,6 +4,7 @@ import os
 import discord
 from dotenv import load_dotenv
 from discord.ext import commands
+import psycopg2
 import mysql.connector
 
 
@@ -33,7 +34,6 @@ async def on_ready():
 @bot.event
 async def on_member_join(ctx, member):
     guild = ctx.guild  # Fetch the guild object
-    pword = os.getenv("password")
 
 
     # Get member information
@@ -45,11 +45,18 @@ async def on_member_join(ctx, member):
     userID = member.id
 
     # Connect to MySQL database
-    db = mysql.connector.connect(
-        host="localhost",
-        user="root",
+    pword = os.getenv("password")
+    hst = os.getenv("host")
+    ser = os.getenv("user")
+    base = os.getenv("database")
+
+
+    # Connect to MySQL database
+    db = psycopg2.connect(
+        host=hst,
+        user=ser,
         password=pword,
-        database="Pickup"
+        database=base
     )
     cursor = db.cursor()
 

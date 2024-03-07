@@ -287,9 +287,9 @@ class MyCommands(commands.Cog):
     async def updateStats(self, ctx, guild, winning_team, winning_members, losing_team, losing_members):
 
         # Connect to MySQL database
-        pword = os.getenv("password"),
-        hst = os.getenv("host"),
-        ser = os.getenv("user"),
+        pword = os.getenv("password")
+        hst = os.getenv("host")
+        ser = os.getenv("user")
         base = os.getenv("database")
 
 
@@ -612,9 +612,9 @@ class MyCommands(commands.Cog):
 
 
         if discord.utils.get(ctx.author.roles, name="Super Saiyan Blue"):
-            pword = os.getenv("password"),
-            hst = os.getenv("host"),
-            ser = os.getenv("user"),
+            pword = os.getenv("password")
+            hst = os.getenv("host")
+            ser = os.getenv("user")
             base = os.getenv("database")
 
 
@@ -642,9 +642,9 @@ class MyCommands(commands.Cog):
             return
 
         if discord.utils.get(ctx.author.roles, name="Super Saiyan Blue"):
-            pword = os.getenv("password"),
-            hst = os.getenv("host"),
-            ser = os.getenv("user"),
+            pword = os.getenv("password")
+            hst = os.getenv("host")
+            ser = os.getenv("user")
             base = os.getenv("database")
 
 
@@ -673,9 +673,9 @@ class MyCommands(commands.Cog):
             return
 
         if discord.utils.get(ctx.author.roles, name="Super Saiyan Blue"):
-            pword = os.getenv("password"),
-            hst = os.getenv("host"),
-            ser = os.getenv("user"),
+            pword = os.getenv("password")
+            hst = os.getenv("host")
+            ser = os.getenv("user")
             base = os.getenv("database")
 
 
@@ -706,9 +706,9 @@ class MyCommands(commands.Cog):
                 await ctx.send("You need to mention a user to remove a loss.")
                 return
             if discord.utils.get(ctx.author.roles, name="Super Saiyan Blue"):
-                pword = os.getenv("password"),
-                hst = os.getenv("host"),
-                ser = os.getenv("user"),
+                pword = os.getenv("password")
+                hst = os.getenv("host")
+                ser = os.getenv("user")
                 base = os.getenv("database")
 
 
@@ -750,9 +750,9 @@ class MyCommands(commands.Cog):
 
     async def fetching(self, ctx, users):
         guild = ctx.guild  # Fetch the guild object
-        pword = os.getenv("password"),
-        hst = os.getenv("host"),
-        ser = os.getenv("user"),
+        pword = os.getenv("password")
+        hst = os.getenv("host")
+        ser = os.getenv("user")
         base = os.getenv("database")
 
 
