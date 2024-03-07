@@ -1,7 +1,7 @@
 # main.py
 
 import os
-from dotenv import load_dotenv
+from dotenv.python import load_dotenv
 import discord
 from discord.ext import commands
 import mysql.connector
