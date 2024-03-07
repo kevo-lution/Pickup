@@ -754,7 +754,8 @@ class MyCommands(commands.Cog):
             host=hst,
             user=ser,
             password=pword,
-            database=base
+            database=base,
+            port = 5432
         )
         cursor = db.cursor()
 
@@ -767,7 +768,7 @@ class MyCommands(commands.Cog):
 
         # Fetch and insert only new members into the MySQL table
         for user in users:
-            cursor.execute("SELECT * FROM UserRecords WHERE UserID = %s", (user.id,))
+            cursor.execute("SELECT * FROM UserRecords WHERE UserID = %s;", (user.id,))
             result = cursor.fetchone()
             if result:
                 await ctx.send(f"{user.display_name} is already in the MySQL database.")
