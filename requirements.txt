@@ -1,2 +1,2 @@
 python-dotenv==1.0.1
-mysql-connector==2.2.9git
+mysql-connector==2.2.9
