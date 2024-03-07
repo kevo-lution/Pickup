@@ -2,7 +2,4 @@ python-dotenv==1.0.1
 mysql-connector==2.2.9
 discord==2.3.2
 asyncio==3.4.3
-<<<<<<< HEAD
 psycopg2 == 2.9.9
-=======
->>>>>>> 9eb10706747f65edaeb0ae80c4bd3c54c9061975
