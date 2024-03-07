@@ -1,0 +1,3 @@
+git+https://github.com/kevo-lution/Pickup
+python-dotenv==1.0.1
+mysql-connector==2.2.9git
