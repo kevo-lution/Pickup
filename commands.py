@@ -1,5 +1,7 @@
 import discord
 from discord.ext import commands
+from dotenv import load_dotenv
+import os
 import asyncio
 import random
 import mysql.connector
@@ -287,7 +289,6 @@ class MyCommands(commands.Cog):
 
         load_dotenv()
         pword = os.getenv("password")
-        bot.run(pword)
 
             # Connect to MySQL database
         db = mysql.connector.connect(
@@ -569,7 +570,6 @@ class MyCommands(commands.Cog):
         nickname = ctx.author.nick
         load_dotenv()
         pword = os.getenv("password")
-        bot.run(pword)
 
             # Connect to MySQL database
         db = mysql.connector.connect(
@@ -606,7 +606,6 @@ class MyCommands(commands.Cog):
             return
         load_dotenv()
         pword = os.getenv("password")
-        bot.run(pword)
 
         if discord.utils.get(ctx.author.roles, name="Super Saiyan Blue"):
             db = mysql.connector.connect(
@@ -633,7 +632,7 @@ class MyCommands(commands.Cog):
             return
         load_dotenv()
         pword = os.getenv("password")
-        bot.run(pword)
+
 
         if discord.utils.get(ctx.author.roles, name="Super Saiyan Blue"):
             db = mysql.connector.connect(
@@ -660,7 +659,6 @@ class MyCommands(commands.Cog):
             return
         load_dotenv()
         pword = os.getenv("password")
-        bot.run(pword)
 
         if discord.utils.get(ctx.author.roles, name="Super Saiyan Blue"):
             db = mysql.connector.connect(
@@ -684,7 +682,7 @@ class MyCommands(commands.Cog):
     async def removel(self, ctx, member: discord.Member):
         load_dotenv()
         pword = os.getenv("password")
-        bot.run(pword)
+
         if discord.utils.get(ctx.author.roles, name="Super Saiyan Blue"):
             if member is None:
                 await ctx.send("You need to mention a user to add a win.")
@@ -729,7 +727,7 @@ class MyCommands(commands.Cog):
         guild = ctx.guild  # Fetch the guild object
         load_dotenv()
         pword = os.getenv("password")
-        bot.run(pword)
+
 
         # Connect to MySQL database
         db = mysql.connector.connect(
