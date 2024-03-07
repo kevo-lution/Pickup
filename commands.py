@@ -739,14 +739,7 @@ class MyCommands(commands.Cog):
         def check(message):
             return message.author == ctx.author and message.channel == ctx.channel
 
-        try:
-            # Wait for the next message from the same user in the same channel
-            await self.bot.wait_for('message', timeout=300, check=check)
-        except asyncio.TimeoutError:
-            pass  # Do nothing if no message is received within 5 minutes
 
-        # Delete the message after another message is sent by the same user
-        await message.delete()
 
     async def fetching(self, ctx, users):
         guild = ctx.guild  # Fetch the guild object
@@ -782,7 +775,7 @@ class MyCommands(commands.Cog):
                 username = user.name  # You can choose which information to insert
                 userID = user.id
                 cursor.execute(
-                    "INSERT INTO UserRecords (UserID, Username, Wins, Losses, Draws, WinPercentage, LastPlayed) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                    "INSERT INTO UserRecords (UserID, Username, Wins, Losses, Draws, WinPercentage, LastPlayed) VALUES (%s, %s, %s, %s, %s, %s, %s);",
                     (userID, username, default_wins, default_losses, default_draws, default_win_percentage,
                     default_last_played))
                 db.commit()
@@ -791,9 +784,6 @@ class MyCommands(commands.Cog):
         # Close database connection when done
         cursor.close()
         db.close()
-
-        await ctx.send("New members have been fetched and inserted into the database.")
-
     @commands.command()
     async def help(self, ctx):
         # Display list of available commands as an ephemeral message
