@@ -819,19 +819,19 @@ class MyCommands(commands.Cog):
         ])
         await ctx.reply(command_list, ephemeral=True)
 
-        @commands.command()
-        async def faq(self, ctx):
-            faq_list = "\n".join([
-                "Commonly asked questions:"
-                "Why doesn't my match start? ALL users must be in a discord channel in the server in order to process the next step",
-                "Why doesn't my Playstation/Xbox not let me join Discord calls. \n"
-                "Make sure your discord and Xbox/Playstation accounts are connected and join the call through the phone"
-                "Only the person who created the queue can use the , endq command"
-                "Only the people who join the queue are able to use the , leaveq command"
-                "If someone is AFK or unable to leaveq, use the , clearq command ton reset the queue"
-                "If you are unable to dispute a win/loss, contact Majin Bver to correct your public records."
+    @commands.command()
+    async def faq(self, ctx):
+        faq_list = "\n".join([
+            "Commonly asked questions:"
+            "Why doesn't my match start? ALL users must be in a discord channel in the server in order to process the next step",
+            "Why doesn't my Playstation/Xbox not let me join Discord calls. \n"
+            "Make sure your discord and Xbox/Playstation accounts are connected and join the call through the phone"
+            "Only the person who created the queue can use the , endq command"
+            "Only the people who join the queue are able to use the , leaveq command"
+            "If someone is AFK or unable to leaveq, use the , clearq command ton reset the queue"
+            "If you are unable to dispute a win/loss, contact Majin Bver to correct your public records."
 
-            ])
+        ])
 
 
 
