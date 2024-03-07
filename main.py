@@ -44,7 +44,7 @@ async def on_member_join(ctx, member):
     username = member.name
     userID = member.id
 
-    # Connect to MySQL database
+    # Connect to Postgres database
     pword = os.getenv("password")
     hst = os.getenv("host")
     ser = os.getenv("user")
