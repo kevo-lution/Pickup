@@ -602,6 +602,9 @@ class MyCommands(commands.Cog):
             await ctx.send(f"{username} has a win/loss record of {wins} - {losses}.")
         else:
             await ctx.send(f"No record found for {username}.")
+            # Close cursor and database connection
+        cursor.close()
+        db.close()
 
 
     @commands.command()
