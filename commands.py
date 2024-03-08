@@ -775,7 +775,7 @@ class MyCommands(commands.Cog):
             userID = member.id
 
             # Check if the member already exists in the table
-            cursor.execute("SELECT * FROM UserRecords WHERE UserID = %s", (userID,))
+            cursor.execute("SELECT * FROM UserRecords WHERE UserID = %s", (str(userID),))
             existing_user = cursor.fetchone()
 
             if existing_user:
