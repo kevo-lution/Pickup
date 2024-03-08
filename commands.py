@@ -759,8 +759,8 @@ class MyCommands(commands.Cog):
         )
         cursor = db.cursor()
 
-        await guild.chunk # grabs all members
-        users = guild.members
+        await guild.chunk()  # Ensure all members are fetched
+        members = guild.members
 
         # Define default values
         default_wins = 0
@@ -769,25 +769,21 @@ class MyCommands(commands.Cog):
         default_win_percentage = 0.0
         default_last_played = None
 
-        # Fetch and insert only new members into the MySQL table
-        for user in users:
-            cursor.execute("SELECT * FROM UserRecords WHERE UserID = %s;", (user.id,))
-            result = cursor.fetchone()
-            if result:
-                await ctx.send(f"{user.display_name} is already in the MySQL database.")
-            else:
-                username = user.name  # You can choose which information to insert
-                userID = user.id
+        # Insert each member into the MySQL table
+        if member not in members:
+            for member in members:
+                username = member.name  # You can choose which information to insert
+                userID = member.id
+                # Replace default values with actual values or remove them if not needed
                 cursor.execute(
-                    "INSERT INTO UserRecords (UserID, Username, Wins, Losses, Draws, WinPercentage, LastPlayed) VALUES (%s, %s, %s, %s, %s, %s, %s);",
+                    "INSERT INTO UserRecords (UserID, Username, Wins, Losses, Draws, WinPercentage, LastPlayed) VALUES (%s, %s, %s, %s, %s, %s, %s)",
                     (userID, username, default_wins, default_losses, default_draws, default_win_percentage,
-                    default_last_played))
+                     default_last_played))
                 db.commit()
-                await ctx.send(f"{user.display_name} has been inserted into the MySQL database.")
-        
+
         # Close database connection when done
-        cursor.close()
-        db.close()
+            cursor.close()
+            db.close()
 
     @commands.command()
     async def help(self, ctx):
