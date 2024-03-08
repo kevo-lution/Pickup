@@ -784,6 +784,10 @@ class MyCommands(commands.Cog):
                     default_last_played))
                 db.commit()
                 await ctx.send(f"{user.display_name} has been inserted into the MySQL database.")
+        
+        # Close database connection when done
+        cursor.close()
+        db.close()
 
     @commands.command()
     async def help(self, ctx):
