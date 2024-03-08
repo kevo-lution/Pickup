@@ -759,6 +759,9 @@ class MyCommands(commands.Cog):
         )
         cursor = db.cursor()
 
+        await guild.chunk # grabs all members
+        users = guild.members
+
         # Define default values
         default_wins = 0
         default_losses = 0
@@ -782,9 +785,6 @@ class MyCommands(commands.Cog):
                 db.commit()
                 await ctx.send(f"{user.display_name} has been inserted into the MySQL database.")
 
-        # Close database connection when done
-        cursor.close()
-        db.close()
     @commands.command()
     async def help(self, ctx):
         # Display list of available commands as an ephemeral message
