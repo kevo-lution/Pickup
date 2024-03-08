@@ -595,7 +595,7 @@ class MyCommands(commands.Cog):
             user_id = users[0].id
             username = users[0].nick  # For the first mentioned user
         # Query the database to retrieve the win/loss record associated with the user ID
-        cursor.execute("SELECT Wins, Losses FROM UserRecords WHERE UserID = %s", (str(user_id,)))
+        cursor.execute("SELECT Wins, Losses FROM UserRecords WHERE UserID = %s", (str(user_id),))
         record = cursor.fetchone()  # Assuming one row per user
         if record:
             wins, losses = record
