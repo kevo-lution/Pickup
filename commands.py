@@ -739,8 +739,6 @@ class MyCommands(commands.Cog):
         def check(message):
             return message.author == ctx.author and message.channel == ctx.channel
 
-
-
     async def fetching(self, ctx, users):
         guild = ctx.guild  # Fetch the guild object
         pword = os.getenv("password")
@@ -775,7 +773,7 @@ class MyCommands(commands.Cog):
             userID = member.id
 
             # Check if the member already exists in the table
-            cursor.execute("SELECT * FROM UserRecords WHERE UserID = %s", (userID,))
+            cursor.execute("SELECT * FROM UserRecords WHERE UserID = CAST(%s AS CHARACTER VARYING)", (str(userID),))
             existing_user = cursor.fetchone()
 
             if existing_user:
