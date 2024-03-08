@@ -802,7 +802,7 @@ class MyCommands(commands.Cog):
         command_list = "\n".join([
             "Available commands for all Users:",
             ",que - Create a queue",
-            ",join - Join a queue",
+            ",join - Join a queue ",
             ",endq - Delete a queue",
             ",leaveq - Leave a queue",
             ",viewq - View available queues",
@@ -811,12 +811,13 @@ class MyCommands(commands.Cog):
             ",wl @user - show a users overall record"
             "\n"
             "\n"
-            "Admin Role Commands:"
-            ",addw - Adds a W in the case where it was not added"
-            ",addl - Adds an L in the case where it was not added"
-            ",removew - Removes a W in case it was added incorrectly"
-            ",removel -  Removes an L in the case where it was added incorrectly"
-            ""
+            "Admin Role Commands: Must Have Super Saiyan Blue to Use",
+            ",addw - Adds a W in the case where it was not added",
+            ",addl - Adds an L in the case where it was not added",
+            ",removew - Removes a W in case it was added incorrectly",
+            ",removel -  Removes an L in the case where it was added incorrectly",
+            ",faq command will answer some question that have been or will be asked."
+            "I do need help making sure this bot works entirely so feel free to hit me up to test it out."
 
         ])
         await ctx.reply(command_list, ephemeral=True)
