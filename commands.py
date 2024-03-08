@@ -769,21 +769,30 @@ class MyCommands(commands.Cog):
         default_win_percentage = 0.0
         default_last_played = None
 
-        # Insert each member into the MySQL table
-        if member not in members:
-            for member in members:
-                username = member.name  # You can choose which information to insert
-                userID = member.id
-                # Replace default values with actual values or remove them if not needed
+        # Check each member and insert them into the PostgreSQL table if they don't exist
+        for member in members:
+            username = member.name  # You can choose which information to insert
+            userID = member.id
+
+            # Check if the member already exists in the table
+            cursor.execute("SELECT * FROM UserRecords WHERE UserID = %s", (userID,))
+            existing_user = cursor.fetchone()
+
+            if existing_user:
+                print(f"User {username} already exists in the database.")
+            else:
+                # Insert the member into the PostgreSQL table
                 cursor.execute(
-                    "INSERT INTO UserRecords (UserID, Username, Wins, Losses, Draws, WinPercentage, LastPlayed) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                    "INSERT INTO UserRecords (UserID, Username, Wins, Losses, Draws, WinPercentage, LastPlayed) "
+                    "VALUES (%s, %s, %s, %s, %s, %s, %s)",
                     (userID, username, default_wins, default_losses, default_draws, default_win_percentage,
-                     default_last_played))
+                        default_last_played))
                 db.commit()
+                print(f"User {username} added to the database.")
 
         # Close database connection when done
-            cursor.close()
-            db.close()
+        cursor.close()
+        db.close()
 
     @commands.command()
     async def help(self, ctx):
