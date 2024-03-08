@@ -741,7 +741,7 @@ class MyCommands(commands.Cog):
 
 
 
-    async def fetching(self, ctx, users):
+    async def fetching(self, ctx):
         guild = ctx.guild  # Fetch the guild object
         pword = os.getenv("password")
         hst = os.getenv("host")
