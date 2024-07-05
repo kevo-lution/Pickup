@@ -155,7 +155,7 @@ class MyCommands(commands.Cog):
         team_a.append(player1_member.name)
 
         # Append player2 to team_b
-        team_b.append(player2_member.name)
+        team_a.append(player2_member.name)
 
         # Create the voice channel for Team A with permissions set
         overwrites_team_a = {
@@ -185,15 +185,15 @@ class MyCommands(commands.Cog):
         for member in team_b:
             player_member = guild.get_member_named(member)
             if player_member:
-                await player_member.move_to(vc_team_b)
+                await player_member.move_to(vc_team_a)
         if player2_member:
-            await player2_member.move_to(vc_team_b)
+            await player2_member.move_to(vc_team_a)
 
         await self.match_end(ctx, vc_team_a, vc_team_b, player1_member, player2_member, team_a, team_b, queue_info)
 
     async def match_end(self, ctx, vc_team_a, vc_team_b, player1_member, player2_member, team_a, team_b, queue_info):
         guild = ctx.guild
-        just_chillin_channel = discord.utils.get(guild.voice_channels, name="Madden")
+        just_chillin_channel = discord.utils.get(guild.voice_channels, name="Just Chillin")
 
         async def delete_voice_channels(self, ctx):
             if guild.me.guild_permissions.manage_channels:
