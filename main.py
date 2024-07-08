@@ -49,6 +49,8 @@ async def on_member_join(ctx, member):
     hst = os.getenv("host")
     ser = os.getenv("user")
     base = os.getenv("database")
+    url = os.getenv("url")
+    portees = os.getenv("port")
 
 
     # Connect to MySQL database
@@ -56,7 +58,10 @@ async def on_member_join(ctx, member):
         host=hst,
         user=ser,
         password=pword,
-        database=base
+        database=base,
+        database_URL = url,
+        port=portees,
+        sslmode='require'
     )
     cursor = db.cursor()
 

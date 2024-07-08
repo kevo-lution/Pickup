@@ -181,6 +181,13 @@ class MyCommands(commands.Cog):
             pickup_role: discord.PermissionOverwrite(view_channel=True)
             # only allow admins to see every channel in the discord
         }
+
+
+
+        # Bug where this creates too many voice channels, fix this
+
+
+
         vc_team_b = await guild.create_voice_channel("Team B", user_limit=None, overwrites=overwrites_team_b)
         for member in team_b:
             player_member = guild.get_member_named(member)
@@ -737,11 +744,7 @@ class MyCommands(commands.Cog):
     @commands.command()
     async def fetch(self, ctx, *users: discord.Member):
         await self.fetching(ctx, users)
-        message = await ctx.send("Members have been fetched and inserted into the MySQL table.")
-
-        # Define a check function for wait_for
-        def check(message):
-            return message.author == ctx.author and message.channel == ctx.channel
+        message = await ctx.send("Members have been fetched and inserted into the PostgreSQL table.")
 
     async def fetching(self, ctx, users):
         guild = ctx.guild  # Fetch the guild object
@@ -750,51 +753,68 @@ class MyCommands(commands.Cog):
         ser = os.getenv("user")
         base = os.getenv("database")
 
+        try:
+            # Connect to PostgreSQL database
+            conn = psycopg2.connect(
+                host=hst,
+                user=ser,
+                password=pword,
+                database=base,
+                port=5432
+            )
+            cursor = conn.cursor()
 
-        # Connect to MySQL database
-        db = psycopg2.connect(
-            host=hst,
-            user=ser,
-            password=pword,
-            database=base,
-            port = 5432
-        )
-        cursor = db.cursor()
+            # Check if "UserRecords" table exists, create if not
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS UserRecords (
+                    UserID VARCHAR(50) PRIMARY KEY,
+                    Username VARCHAR(255),
+                    Wins INT DEFAULT 0,
+                    Losses INT DEFAULT 0,
+                    Draws INT DEFAULT 0,
+                    WinPercentage FLOAT DEFAULT 0.0,
+                    LastPlayed TIMESTAMP
+                );
+            """)
+            conn.commit()
 
-        await guild.chunk()  # Ensure all members are fetched
-        members = guild.members
+            await guild.chunk()  # Ensure all members are fetched
+            members = guild.members
 
-        # Define default values
-        default_wins = 0
-        default_losses = 0
-        default_draws = 0
-        default_win_percentage = 0.0
-        default_last_played = None
+            # Define default values
+            default_wins = 0
+            default_losses = 0
+            default_draws = 0
+            default_win_percentage = 0.0
+            default_last_played = None
 
-        # Check each member and insert them into the PostgreSQL table if they don't exist
-        for member in members:
-            username = member.name  # You can choose which information to insert
-            userID = member.id
+            # Check each member and insert them into the PostgreSQL table if they don't exist
+            for member in members:
+                username = member.name  # You can choose which information to insert
+                userID = str(member.id)  # Convert to string for PostgreSQL
 
-            # Check if the member already exists in the table
-            cursor.execute("SELECT * FROM UserRecords WHERE UserID = CAST(%s AS CHARACTER VARYING)", (str(userID),))
-            existing_user = cursor.fetchone()
+                # Check if the member already exists in the table
+                cursor.execute("SELECT * FROM UserRecords WHERE UserID = %s", (userID,))
+                existing_user = cursor.fetchone()
 
-            if existing_user:
-                print(f"User {username} already exists in the database.")
-            else:
-                # Insert the member into the PostgreSQL table
-                cursor.execute(
-                    "INSERT INTO UserRecords (UserID, Username, Wins, Losses, Draws, WinPercentage, LastPlayed) "
-                    "VALUES (%s, %s, %s, %s, %s, %s, %s)",
-                    (userID, username, default_wins, default_losses, default_draws, default_win_percentage,
-                        default_last_played))
-                db.commit()
-                print(f"User {username} added to the database.")
+                if existing_user:
+                    print(f"User {username} already exists in the database.")
+                else:
+                    # Insert the member into the PostgreSQL table
+                    cursor.execute(
+                        "INSERT INTO UserRecords (UserID, Username, Wins, Losses, Draws, WinPercentage, LastPlayed) "
+                        "VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                        (userID, username, default_wins, default_losses, default_draws, default_win_percentage,
+                        default_last_played)
+                    )
+                    conn.commit()
+                    print(f"User {username} added to the database.")
 
-        # Close database connection when done
-        cursor.close()
-        db.close()
+            cursor.close()
+            conn.close()
+
+        except psycopg2.Error as e:
+            print(f"Error connecting to PostgreSQL database: {e}")
 
     @commands.command()
     async def help(self, ctx):
